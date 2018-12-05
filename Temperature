@@ -1,0 +1,454 @@
+package temperature;
+import java.util.Scanner;
+
+public class Temperature {
+
+    public static Scanner keyboard = new Scanner(System.in);
+
+    private double degree;
+
+    private char scale;
+
+    public Temperature() {}               
+
+    public Temperature(double other, char unit) {
+
+        set(other, unit);
+
+    }
+
+    public void read() {
+
+            System.out.println("Please enter the VacuumBottle for the given array, like ( 3 44.00 C/F/K). ");
+
+            this.degree = keyboard.nextDouble();
+
+         Scanner keyboard= new Scanner(System.in);
+
+            System.out.println("Now enter the Scale C,F, or K.");
+
+            this.scale = keyboard.nextLine().toUpperCase().charAt(0);
+
+    }
+
+    public double getDegree(){
+
+        return this.degree;
+
+    }
+
+    public char getScale(){
+
+        return this.scale;
+
+            }
+
+    public void setDegree(double x){
+
+    this.degree=x;
+
+    }
+
+    public void setScale(char y){
+
+        this.scale=y;
+
+    }
+
+   
+
+   
+
+    public void set(double temp, char unit) {       
+
+        this.scale = unit;
+
+        switch (this.scale) {
+
+            case 'K': {
+
+                if (temp < 0) {
+
+                    System.out.println("Invalid entery! kelvin cannot be less than \"0\" degree");
+
+                    System.exit(0);
+
+                } else {
+
+                    this.degree = temp;
+
+                }
+
+                break;
+
+            }
+
+            case 'F': {
+
+                if (temp < -459.67) {
+
+                    System.out.println("Invalid entery! degree Faheranheit cannot be less than \"-459.67\" degree");
+
+                    System.exit(0);
+
+                } else {
+
+                    this.degree = temp;
+
+                }
+
+                break;
+
+            }
+
+            case 'C': {
+
+                if (temp < -273.15) {
+
+                    System.out.println("Invalid entery! Celciuse cannot be less than \"-459.67\" degree");
+
+                    System.exit(0);
+
+                } else {
+
+                    this.degree = temp;
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+    }
+
+    public Temperature toCelsius() {
+
+        Temperature temptoCelsius = new Temperature();
+
+        switch (this.scale) {
+
+            case 'C':
+
+                temptoCelsius.degree = this.degree;
+
+                temptoCelsius.scale='C';
+
+                break;
+
+            case 'K':
+
+                temptoCelsius.degree = this.degree - 273.15;
+
+                temptoCelsius.scale='K';
+
+                break;
+
+            case 'F':
+
+                temptoCelsius.degree = (this.degree - 32) / 1.8;
+
+                temptoCelsius.scale='F';
+
+                break;
+
+        }
+
+        return temptoCelsius;
+
+    }
+
+    public Temperature toKelvin() {
+
+        Temperature temptoKelvin = new Temperature();
+
+        switch (this.scale) {
+
+            case 'K':
+
+                temptoKelvin.degree = this.degree;
+
+                temptoKelvin.scale='K';
+
+                break;
+
+            case 'C':
+
+                temptoKelvin.degree = this.degree + 273.15;
+
+                temptoKelvin.scale='C';
+
+                break;
+
+            case 'F':
+
+                temptoKelvin.degree = (this.degree + 459.67) / 1.8;
+
+                temptoKelvin.scale='F';
+
+                break;
+
+        }
+
+        return temptoKelvin;
+
+    }
+
+    public Temperature toFahrenheit() {
+
+        Temperature temptoFahrenheit = new Temperature();
+
+        switch (this.scale) {
+
+            case 'F':
+
+                temptoFahrenheit.degree = this.degree;
+
+                temptoFahrenheit.scale='F';
+
+                break;
+
+            case 'C':
+
+                temptoFahrenheit.degree = (1.8 * this.degree + 32);
+
+                temptoFahrenheit.scale='C';
+
+                break;
+
+            case 'K':
+
+                temptoFahrenheit.degree = (1.8 * this.degree - 459.67);
+
+                temptoFahrenheit.scale='K';
+
+                break;
+
+        }
+
+        return temptoFahrenheit;
+
+    }
+
+    public Temperature add(Temperature other) {
+
+        Temperature sum = new Temperature();
+
+        switch (this.scale) {
+
+            case 'C':
+
+                sum.degree = this.degree + other.toCelsius().degree;
+
+                sum.scale='C';
+
+                break;
+
+            case 'K':
+
+                sum.degree = this.degree + other.toKelvin().degree;
+
+                sum.scale='K';
+
+                break;
+
+            case 'F':
+
+                sum.degree = this.degree + other.toFahrenheit().degree;
+
+                sum.scale='F';
+
+                break;
+
+        }
+
+        return sum;
+
+    }
+
+    public Temperature subtract(Temperature other) {
+
+        Temperature sub = new Temperature();
+
+        switch (this.scale) {
+
+            case 'C':
+
+                sub.degree = this.degree - other.toCelsius().degree;
+
+                sub.scale='C';
+
+                break;
+
+            case 'K':
+
+                sub.degree = this.degree - other.toKelvin().degree;
+
+                sub.scale='K';
+
+                break;
+
+            case 'F':
+
+                sub.degree = this.degree - other.toFahrenheit().degree;
+
+                sub.scale='F';
+
+                break;
+
+        }
+
+        sub.set(sub.degree, this.scale);
+
+        return sub;
+
+    }
+
+    public Temperature multiply(Temperature other) {
+
+        Temperature multiply = new Temperature();
+
+        switch (this.scale) {
+
+            case 'C':
+
+                multiply.degree = this.degree * other.toCelsius().degree;
+
+                multiply.scale='C';
+
+                break;
+
+            case 'K':
+
+                multiply.degree = this.degree * other.toKelvin().degree;
+
+                multiply.scale='K';
+
+                break;
+
+            case 'F':
+
+                multiply.degree = this.degree * other.toFahrenheit().degree;
+
+                multiply.scale='F';
+
+                break;
+
+        }
+
+        return multiply;
+
+    }
+
+    public Temperature divide(double other) {
+
+        Temperature divide = new Temperature();
+
+        divide.degree = this.degree / other;
+
+        divide.scale=this.scale;
+
+        divide.set(divide.degree, this.scale);
+
+        return divide;
+
+    }
+
+    public boolean equals(Temperature other) {
+
+        boolean answer = false;
+
+        switch (this.scale) {
+
+            case 'C': {
+
+                if (this.degree == other.toCelsius().degree||((this.degree-other.toCelsius().degree>(-0.01) && this.degree-other.toCelsius().degree<0.01))) {
+
+                    answer = true;
+
+                }
+
+                break;
+
+            }
+
+            case 'F': {
+
+                if ((this.degree == other.toFahrenheit().degree)||((this.degree-other.toFahrenheit().degree>(-0.01))&&(this.degree-other.toFahrenheit().degree<(0.01)))) {
+
+                    answer = true;
+
+                }
+
+                break;
+
+            }
+
+            case 'K': {
+
+                if ((this.degree == other.toFahrenheit().degree)||((this.degree-other.toKelvin().degree>(-0.01))&&(this.degree-other.toKelvin().degree)<0.01)) {
+
+                    answer = true;
+
+                }
+
+                break;
+
+            }
+
+        }
+
+        return answer;
+
+    }
+
+    public boolean greaterThan(Temperature other) {
+
+        boolean answer = false;
+
+        switch (this.scale) {
+
+            case 'C':
+
+                if (this.degree > other.toCelsius().degree) {
+
+                    answer = true;
+
+                }
+
+                break;
+
+            case 'F':
+
+                if (this.degree > other.toFahrenheit().degree) {
+
+                    answer = true;
+
+                }
+
+                break;
+
+            case 'K':
+
+                if (this.degree > other.toKelvin().degree) {
+
+                    answer = true;
+
+                }
+
+                break;
+
+        }
+
+        return answer;
+
+    }
+
+    public String toString() {
+
+        return " " + this.degree + " degree " + this.scale;
+
+    }
+
+}
